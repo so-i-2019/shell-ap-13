@@ -1,19 +1,19 @@
 /* main.c - The foo shell
 
-   Copyright (c) 2019 <project-developers>
+   Copyright (c) 2019 Joao Vitor Silva Ramos and Vitor Santana Cordeiro
 
-   This file is part of <project-name>
+   This file is part of GGshell
 
-   <project-name> is free software: you can redistribute it and/or modify
+   GGshell is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <config.h>
 
-#ifndef HAVE_POSIXEG 
+#ifndef HAVE_POSIXEG
 #error *** This example needs libposixeg (do you need CPPFLAGS/LDFLAGS?)
 #endif
 
@@ -66,7 +66,7 @@ int main (int argc, char **argv)
       if (!parse_command_line (command_line, pipeline))
 	{
 
-	  /* This is an example, of how to use pipeline_t. 
+	  /* This is an example, of how to use pipeline_t.
 	     See tparse.h for detailed information. */
 
 	  printf ("  Pipeline has %d command(s)\n", pipeline->ncommands);
@@ -78,15 +78,15 @@ int main (int argc, char **argv)
 		printf ("%s ", pipeline->command[i][j]);
 	      printf ("\n");
 	    }
-	  
+
 
 	  if ( RUN_FOREGROUND(pipeline))
 	    printf ("  Run pipeline in foreground\n");
 	  else
 	    printf ("  Run pipeline in background\n");
 
-	  
-	  
+
+
 	  if ( REDIRECT_STDIN(pipeline))
 	    printf ("  Redirect input from %s\n", pipeline->file_in);
 	  if ( REDIRECT_STDOUT(pipeline))
@@ -96,18 +96,18 @@ int main (int argc, char **argv)
 	     the job, not the shell itself, be interrupted or suspended
 	     by terminal character signals (Control-C, Control-Z).
 
-	     see sigaction(). 
+	     see sigaction().
 
 	     Tip: when block at read (prompting), a signal may unblock
 	     the process. It's convenient to have the read call within
 	     a loop which reissue read (p.ex. check errrno).
 
 	  */
-	  
-	  /* This is where we would fork & exec. 
+
+	  /* This is where we would fork & exec.
 
 	     For a trivial implementation of a single-command execution,
-	     parent process calls wait and blocks until a child terminates 
+	     parent process calls wait and blocks until a child terminates
 	     (receives a SIGCHLD). On background execution, parent does
 	     not block a prompts the user again. In this case, a properly
 	     configure signal handler should catch eventual SIGCHLD signals
@@ -121,7 +121,7 @@ int main (int argc, char **argv)
 	     In foreground mode, terminal control should be assigned to the
 	     job; in background mode terminal control should remain with
 	     the shell process.
-	     
+
 	        see tcsetpgid(), tcsetpgrp()
 
 	     If there is redirection (I/O or pipe), take care or this.
@@ -134,18 +134,18 @@ int main (int argc, char **argv)
 	     If SIGINT and SIGTSTOP were ignored before, reset the default
 	     behavior.
 
-	     Child process then calls exec and runs the selected command. 
+	     Child process then calls exec and runs the selected command.
 
 	        see execvp()
 	   */
 
 	  /* Tips.
 
-	     See "Job Control" section of GNU Libc manual at 
+	     See "Job Control" section of GNU Libc manual at
              https://www.gnu.org/software/libc/manual/html_mono/libc.html#Job-Control
 
 	     There are several examples of setting terminal control, pipeline
-	     implementation (both recursive and iterative), fork & exec, 
+	     implementation (both recursive and iterative), fork & exec,
 	     signal handling etc. at posixeg/examples/snippets.
 
 	   */

@@ -1,10 +1,10 @@
 ##   Makefile.am - Main Automake script for autohello
 ##
-##   Copyright (c) 2019, <project-developers>
+##   Copyright (c) 2019, Joao Vitor Silva Ramos and Vitor Santana Cordeiro
 ##
-##   This file is part of <project-name>
+##   This file is part of GGshell
 ##
-##   <project-name> is free software: you can redistribute it and/or modify
+##   GGshell is free software: you can redistribute it and/or modify
 ##   it under the terms of the GNU General Public License as published by
 ##   the Free Software Foundation, either version 3 of the License, or
 ##   (at your option) any later version.
@@ -18,7 +18,7 @@
 ##   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AM_DISTCHECK_CONFIGURE_FLAGS = CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(LDFLAGS)"
-SUBDIRS = src 
+SUBDIRS = src
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = @ac_macro_dir@/ax_pthread.m4 @ac_macro_dir@/ax_lib_readline.m4 
+EXTRA_DIST = @ac_macro_dir@/ax_pthread.m4 @ac_macro_dir@/ax_lib_readline.m4
