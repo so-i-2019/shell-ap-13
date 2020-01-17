@@ -53,7 +53,7 @@ AC_SEARCH_LIBS([posixeg_version], [posixeg],
 # https://www.gnu.org/software/autoconf-archive/ax_lib_readline.html
 # for how to use config.h in you project.
 #
-#AX_LIB_READLINE
+AX_LIB_READLINE
 
 
 AC_CONFIG_FILES([Makefile src/Makefile])	dnl Output files
