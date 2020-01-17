@@ -21,7 +21,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/lib @CPP_FLAGS@
 AM_CFLAGS =   @C_FLAGS@
 AM_LDFLAGS =  @LD_FLAGS@
 
-bin_PROGRAMS = GGshell
+bin_PROGRAMS = myshell
 
 myshell_SOURCES = main.c
 
