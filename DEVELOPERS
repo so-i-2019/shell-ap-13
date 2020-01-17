@@ -1,0 +1,134 @@
+
+ DEVELOPERS INSTRUCTIONS
+ ==============================
+
+ QUCIK START
+ ------------------------------
+
+ This is the template that you should use as a boilerplate for the shell
+ project. If you have already started to work with a different project
+ with a different template, it should not be difficult to adapt it to
+ this format.
+
+ BUILDING THE EXAMPLE
+
+ You don't need to build the example if you are going your own code. In
+ case you wish to, however, the template is based on the GNU Build System
+ (aka Autotools). In order to build this example, after having your git
+ repository ready, proceed as follows.
+
+ a) Clone the project
+
+ 	  $ git clone git@github.com:<class>/<projecname>.git
+
+    replacing <class> and <projecname> properly.
+
+ b) Make sure you have Autoconf, Automake and Libtool installed and run the
+    bootstrap script
+
+    	  $ cd <projectname>
+	  $ ./autogen.sh
+
+    This will run autoreconf tool and generate configure script.
+
+ c) Run configure script
+
+    	  $ ./configure
+
+    This will perform the tests specified in Autoconf script (configure.ac)
+    and use Automake script (Makefile.am) to produce a customized Make
+    script Makefile within the project main directory.
+
+    This example project uses libposixeg (https://gitlab.com/monaco/posixeg)
+    Make sure you have it installed (see POSIXeg README file).
+    In case you have installed libposixeg in a non-standard path (e.g. you
+    don't want to use sudo privileges), pass the corresponding user compiler
+    flags CPPFLAGS and LDFLAGS, respectively. For instance, if you have
+    installed libposixeg with, say
+
+    	   $ ./configure --prefix=/tmp/foo
+
+    then, when building the present example, call configure like
+
+           $ ./configure LDFLAGS=-L/tmp/foo/lib CPPFLAGS=-I/tmp/foo/include
+
+ d) Run make
+
+    	  $ make
+
+    If everything goes well, this should build the project.
+
+ The shell source code is within <projecname>/src directory. It contains a
+ skeleton file main.c which you may use a start point if you wish. This is not
+ required, though; you may replace it with your own code (if it's called
+ something different from main.c, just edit src/Makefile.am accordingly.
+
+ 
+ BEFORE YOU START
+ ------------------------------
+ 
+ * Edit all the comments on the template files
+
+   - replace <project-name> with the (hopefully original) name of your project
+   - replace <project-developers> with the actual developers' names
+
+   Affect files: Autoconf scripts (configure.ac), Automake scripts (Makefile.am)
+   	         c source files (*.c) c header files (*.h)
+
+
+  * Edit files AUTHORS accordingly
+
+  * Change the name of your binary shell progrram from myshell to a (hopefully
+    original) name.
+
+    Affect file: src/Makefile.am
+
+  * Every source file (*.c, *.h) should have a header comment with author and
+    licensing information (you may safely copy the template from main.c)
+
+  ARE YOU USING libposixeg?
+  ------------------------------
+
+  * If your project relies on libposixeg, uncomment the corresponding check
+    in configure.ac
+
+  * If you have installed libposixeg in a nonstandard location (e.g. if you
+    don't want to install it as root), run configure script using
+
+    	  ./configure CPPFLAGS=-I<header-path> LDFLAGS=L/<lib-path>
+      
+    replacing <heaher-path> and <lib-path> with the proper paths.   
+ 
+  ARE YOU USING libreadline ?
+  ------------------------------
+
+  Provided Autoconf script (configure.ac) already check for libreadline.
+  In order to use the library in your project, see configure.ac and
+  uncomment the relevant lines.
+
+  BEFORE RELEASING YOUR PROJECT
+  ------------------------------
+
+  When you think your project is completed, run
+
+      make distcheck in order to see if everything is ok.
+
+  DELIVERING YOUR FINAL PROJECT
+  ------------------------------
+
+  To delivery your final project create a tag shell-r1.
+  Should you need to make a second delivery, tag it shell-r2 and so on.
+  The last r-number (release) will be considered for evaluation.
+
+  To tag (make a realease)
+
+      $ git tag -a shell-r1
+      $ git push origin shell-r1
+
+  IF YOU HAVE TROUBLE
+  ------------------------------
+
+  Create a branch with your code, upload it and send an e-mail to the
+  instructor(s). 
+
+  
