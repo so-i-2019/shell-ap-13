@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <config.h>
+#include <signal.h>
 
 #ifndef HAVE_POSIXEG
 #error *** This example needs libposixeg (do you need CPPFLAGS/LDFLAGS?)
@@ -34,8 +35,32 @@
 
 int go_on = 1;			/* This variable controls the main loop. */
 
+void handleCtrlC(int num) {
+    printf("GuiGay");
+}
+
 int main (int argc, char **argv) {
     int i, j, aux;
+    // Our variables
+    int resultCtrlC, resultCtrlZ;
+    struct sigaction actC, actZ;		/* Signal handler structure. */
+    void *temp;
+
+    // Fill the structs with 0s
+    temp = memset(&actC, 0, sizeof(struct sigaction));
+    sysfatal(!temp);
+    temp = memset(&actC, 0, sizeof(struct sigaction));
+    sysfatal(!temp);
+
+    // The only field that is valuable to us is the "sa_handler"
+    actC.sa_handler = handleCtrlC;		
+    actZ.sa_handler = handleCtrlZ;   
+
+    // Tries to change the signals' behaviour
+    resultCtrlC = sigaction(SIGINT, &actC, NULL);
+    resultCtrlZ = sigaction(SIGTSTP, &actZ, NULL);
+    sysfatal(resultCtrlC < 0);
+    sysfatal(resultCtrlZ < 0);
 
     /* This example uses libposixeg's trivial parser, which implements
         foosh grammar. Please, see documentation in posixeg/lib/tparser.h.
@@ -68,26 +93,27 @@ int main (int argc, char **argv) {
 
             printf ("  Pipeline has %d command(s)\n", pipeline->ncommands);
 
-            for (i=0; pipeline->command[i][0]; i++)
-            {
-            printf ("  Command %d has %d argument(s): ", i, pipeline->narguments[i]);
-            for (j=0; pipeline->command[i][j]; j++)
-            printf ("%s ", pipeline->command[i][j]);
-            printf ("\n");
+            for (i=0; pipeline->command[i][0]; i++) {
+                printf ("  Command %d has %d argument(s): ", i, pipeline->narguments[i]);
+
+                for (j=0; pipeline->command[i][j]; j++)
+                    printf ("%s ", pipeline->command[i][j]);
+
+                printf ("\n");
             }
 
 
             if ( RUN_FOREGROUND(pipeline))
-            printf ("  Run pipeline in foreground\n");
+                printf ("  Run pipeline in foreground\n");
             else
-            printf ("  Run pipeline in background\n");
+                printf ("  Run pipeline in background\n");
 
 
 
             if ( REDIRECT_STDIN(pipeline))
-            printf ("  Redirect input from %s\n", pipeline->file_in);
+                printf ("  Redirect input from %s\n", pipeline->file_in);
             if ( REDIRECT_STDOUT(pipeline))
-            printf ("  Redirect output to  %s\n", pipeline->file_out);
+                printf ("  Redirect output to  %s\n", pipeline->file_out);
 
             /* Don't forget to handle SIGINT and SIGTSTOP properly so that
             the job, not the shell itself, be interrupted or suspended
